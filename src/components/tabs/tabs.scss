@@ -1,0 +1,27 @@
+.tabs {
+  &__list {
+    @apply w-full flex;
+  }
+  &__li {
+    @apply flex-1;
+    & button {
+      border-width: 1px 1px 1px 0;
+    }
+    &:first-child button {
+      border-left-width: 1px;
+      border-radius: 6px 0 0 6px;
+    }
+    &:last-child button {
+      border-radius: 0 6px 6px 0;
+    }
+  }
+  &__btn {
+    @apply w-full flex items-center justify-center py-4 text-font-primary border-blue-light hover:bg-blue-dark hover:text-white transition;
+    &.active {
+      @apply text-white bg-blue;
+    }
+  }
+  &__text {
+    @apply text-xs leading-5 font-semibold;
+  }
+}

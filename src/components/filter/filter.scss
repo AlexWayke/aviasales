@@ -1,0 +1,33 @@
+.filter {
+  &__title {
+    @apply pt-5 px-5 pb-2.5 text-xs font-semibold tracking-widest text-font-primary;
+  }
+  &__label {
+    @apply flex py-2.5 px-5 gap-2.5 hover:bg-background-light transition ease-in-out cursor-pointer;
+  }
+  &__input {
+    appearance: none;
+    position: relative;
+    border-radius: 0.125rem;
+    border: 1px solid var(--blue-light);
+
+    &::after {
+      content: url('../../assets/arr-icon.svg');
+      transition: all ease 0.3s;
+      transform: scale(0);
+    }
+    &:checked {
+      border-color: var(--blue);
+      &::after {
+        transform: scale(1);
+      }
+    }
+    @apply flex items-center justify-center transition ease-in-out w-5 h-5;
+  }
+  &__text {
+    @apply text-font-primary text-xs leading-5 font-semibold;
+  }
+  &__list {
+    @apply pb-2.5;
+  }
+}
