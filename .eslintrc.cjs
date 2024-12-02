@@ -11,6 +11,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
+    "plugin:css-modules/recommended"
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
@@ -28,8 +29,10 @@ module.exports = {
     "react",
     "readable-tailwind",
     "@typescript-eslint",
+    "css-modules"
   ],
   rules: {
+    "quotes": [2, "single", { "avoidEscape": true }],
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
@@ -37,6 +40,7 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
+        singleQuote: true,
         printWidth: 80,
         trailingComma: "es5",
         bracketSpacing: true,

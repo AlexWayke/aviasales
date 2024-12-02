@@ -2,11 +2,11 @@ import './flex-template.scss';
 
 type FlexProps = {
   children: React.ReactNode;
-  direction: string;
+  classes: string;
 };
 
 function FlexTemplate(props: FlexProps) {
-  const classes: string = `flex-template flex-${props.direction}`;
+  const classes: string = `flex-template ${props.classes}`;
 
   return <div className={classes}>{props.children}</div>;
 }
