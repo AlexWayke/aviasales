@@ -9,9 +9,9 @@
     @apply text-blue text-2xl leading-6 font-semibold;
   }
   &__body {
-    @apply flex-col justify-between;
+    @apply md:flex-col justify-between;
     &-row {
-      @apply justify-between flex-1;
+      @apply justify-between flex-col flex-1 md:flex-row;
     }
     &-col {
       @apply flex-1;

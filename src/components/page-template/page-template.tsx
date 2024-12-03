@@ -1,12 +1,11 @@
-import './flex-template.scss';
+import './page-template.scss';
 
 type FlexProps = {
   children: React.ReactNode;
-  classes: string;
 };
 
 function FlexTemplate(props: FlexProps) {
-  const classes: string = `flex-template ${props.classes}`;
+  const classes: string = 'page-template';
 
   return <div className={classes}>{props.children}</div>;
 }

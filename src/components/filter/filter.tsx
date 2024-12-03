@@ -1,3 +1,4 @@
+import Flex from '@Components/flex/flex';
 import Box from '../boxes/box';
 import './filter.scss';
 
@@ -9,7 +10,7 @@ function Filter() {
     { name: '3 пересадки', id: '4' },
   ];
   const filterEls = filterNames.map((filter) => (
-    <li key={filter.id}>
+    <li className="filter__li" key={filter.id}>
       <label className={'filter__label'} htmlFor={filter.id}>
         <input
           className={'filter__input'}
@@ -23,10 +24,12 @@ function Filter() {
   ));
 
   return (
-    <Box>
-      <h2 className={'filter__title'}>КОЛИЧЕСТВО ПЕРЕСАДОК</h2>
-      <ul className={'filter__list'}>{filterEls}</ul>
-    </Box>
+    <Flex classes="filter__wrapper">
+      <Box>
+        <h2 className={'filter__title'}>КОЛИЧЕСТВО ПЕРЕСАДОК</h2>
+        <ul className={'filter__list'}>{filterEls}</ul>
+      </Box>
+    </Flex>
   );
 }
 
