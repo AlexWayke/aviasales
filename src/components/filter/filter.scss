@@ -15,7 +15,7 @@
     border: 1px solid var(--blue-light);
 
     &::after {
-      content: url('../../assets/arr-icon.svg');
+      content: url('arr-icon.svg');
       transition: all ease 0.3s;
       transform: scale(0);
     }

@@ -1,30 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { getTickets, Ticket } from '../api/getData';
 
+import { Ticket } from '@Components/api/getData';
+import Button from '@Components/button/button';
+import sortTickets from '@Components/utils/sorting';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Card from '../card/card';
 import Flex from '../flex/flex';
+import { fetchTickets } from '../redux/slices/ticketsSlice';
 import './card-template.scss';
 
 function CardTemplate() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const dispatch = useAppDispatch();
+  const tickets = useAppSelector((state) => state.tickets.tickets);
+  const filters = useAppSelector((state) => state.filters.filters);
+  const sortBy = useAppSelector((state) => state.sort.sortBy);
+  const [countOfTickets, setCountOfTickets] = useState(5);
 
-  const cardEls = tickets.map((card) => <Card info={card} key={uuidv4()} />);
+  const filteredTickets = sortTickets(
+    tickets.filter((ticket) =>
+      ticket.segments.every(
+        (segment) =>
+          filters.find((filter) => filter.count === segment.stops.length)?.isOn
+      )
+    ),
+    sortBy
+  );
+
+  const cardEls = filteredTickets
+    .slice(0, countOfTickets)
+    .map((card: Ticket) => <Card info={card} key={uuidv4()} />);
+
+  const noTicketsCard = (
+    <Flex classes="no-tickets">
+      <p>По этому запросу билетов не найдено :(</p>
+    </Flex>
+  );
 
   useEffect(() => {
-    void (async () => {
-      try {
-        const ticketsRes = await getTickets();
-        if (ticketsRes) {
-          setTickets(ticketsRes.slice(0, 5));
-        }
-      } catch {
-        throw new Error("Can't fetch tickets");
-      }
-    })();
-  }, []);
+    void dispatch(fetchTickets());
+  }, [dispatch]);
 
-  return <Flex classes="flex-col">{cardEls}</Flex>;
+  const ticketsCountHandler = () => {
+    setCountOfTickets(countOfTickets + 5);
+  };
+
+  return (
+    <Flex classes="flex-col">
+      {cardEls.length > 0 ? cardEls : noTicketsCard}
+      {cardEls.length > 0 && (
+        <Button
+          name={'ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ'}
+          handler={ticketsCountHandler}
+        ></Button>
+      )}
+    </Flex>
+  );
 }
 
 export default CardTemplate;

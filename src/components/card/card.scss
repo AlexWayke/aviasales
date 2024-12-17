@@ -21,6 +21,9 @@
       &--gray {
         @apply text-gray;
       }
+      &--time {
+        @apply lowercase;
+      }
     }
   }
 }

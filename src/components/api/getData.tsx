@@ -1,3 +1,5 @@
+import { setError } from '../redux/slices/errorSlice';
+
 interface Ticket {
   price: number;
   carrier: string;
@@ -23,23 +25,29 @@ const getData = async (url: string) => {
   const result = await fetch(url);
 
   if (!result.ok) {
+    setError('Could not fetch');
     throw new Error('Could not fetch');
   }
   const parsedResult: object = await result.json();
-
-  return parsedResult;
+  return { result: parsedResult, status: result.status };
 };
 
 const getSearchId = async () => {
-  const search: { searchId?: string } = await getData(
-    'https://aviasales-test-api.kata.academy/search'
-  );
+  const search: { result?: { searchId?: string }; status: number } =
+    await getData('https://aviasales-test-api.kata.academy/search');
 
-  return search.searchId ? search.searchId : '';
+  if (search.status === 500) {
+    void getSearchId();
+  }
+
+  return search.result && search.result.searchId ? search.result.searchId : '';
 };
 
 type TicketsRes = {
-  tickets?: Ticket[];
+  result: {
+    tickets?: Ticket[];
+  };
+  status: number;
 };
 
 const getTickets = async () => {
@@ -48,7 +56,7 @@ const getTickets = async () => {
     `https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`
   );
 
-  return ticketsRes.tickets;
+  return ticketsRes.result.tickets;
 };
 
 export { getTickets };

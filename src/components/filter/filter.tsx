@@ -1,22 +1,25 @@
 import Flex from '@Components/flex/flex';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Box from '../boxes/box';
 import './filter.scss';
+import { changeFilters } from '../redux/slices/filtersSlice';
+import type { Filter } from '../redux/slices/filtersSlice';
 
 function Filter() {
-  const filterNames = [
-    { name: 'Без пересадок', id: '1' },
-    { name: '1 пересадка', id: '2' },
-    { name: '2 пересадки', id: '3' },
-    { name: '3 пересадки', id: '4' },
-  ];
-  const filterEls = filterNames.map((filter) => (
+  const filters: Filter[] = useAppSelector((state) => state.filters.filters);
+
+  const dispatch = useAppDispatch();
+
+  const filterEls = filters.map((filter) => (
     <li className="filter__li" key={filter.id}>
       <label className={'filter__label'} htmlFor={filter.id}>
         <input
           className={'filter__input'}
           name="filter"
           id={filter.id}
-          type="radio"
+          checked={filter.isOn}
+          type="checkbox"
+          onChange={() => dispatch(changeFilters(filter.id))}
         />
         <p className={'filter__text'}>{filter.name}</p>
       </label>

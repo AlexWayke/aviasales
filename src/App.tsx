@@ -1,21 +1,29 @@
+import CardTemplate from '@Components/card-template/card-template';
+import Error from '@Components/error/error';
+import Filter from '@Components/filter/filter';
+import Flex from '@Components/flex/flex';
 import Header from '@Components/header/header';
-import Button from './components/button/button';
-import CardTemplate from './components/card-template/card-template';
-import Filter from './components/filter/filter';
-import Flex from './components/flex/flex';
-import PageTemplate from './components/page-template/page-template';
-import Tabs from './components/tabs/tabs';
+import PageTemplate from '@Components/page-template/page-template';
+import Preloader from '@Components/preloader/preloader';
+import Tabs from '@Components/tabs/tabs';
+import { useAppSelector } from './hooks';
 
 function App() {
+  const status = useAppSelector((state) => state.tickets.status);
+  const isError = useAppSelector((state) => state.error.error);
+  console.log('isError', isError);
+  const errorStatus = useAppSelector((state) => state.error.status);
+
   return (
     <Flex classes="flex-col">
       <Header />
+      {isError && <Error status={errorStatus} />}
       <PageTemplate>
         <Filter />
         <Flex classes="flex-col">
           <Tabs />
+          <Preloader status={status} />
           <CardTemplate />
-          <Button name={'ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ'}></Button>
         </Flex>
       </PageTemplate>
     </Flex>
