@@ -1,0 +1,6 @@
+.button {
+  @apply h-fit w-full inline-block px-5 py-4 bg-blue rounded transition ease-in-out hover:bg-blue-dark;
+  &__text {
+    @apply text-xs leading-5 text-white font-semibold tracking-wide;
+  }
+}

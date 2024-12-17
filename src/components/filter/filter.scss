@@ -1,0 +1,39 @@
+.filter {
+  &__wrapper {
+    @apply flex-col md:w-96;
+  }
+  &__title {
+    @apply pt-5 px-5 pb-2.5 text-xs font-semibold tracking-widest text-font-primary;
+  }
+  &__label {
+    @apply flex items-center h-full py-2.5 px-2.5 gap-2.5 transition ease-in-out cursor-pointer md:hover:bg-background-light md:px-5;
+  }
+  &__input {
+    appearance: none;
+    position: relative;
+    border-radius: 0.125rem;
+    border: 1px solid var(--blue-light);
+
+    &::after {
+      content: url('arr-icon.svg');
+      transition: all ease 0.3s;
+      transform: scale(0);
+    }
+    &:checked {
+      border-color: var(--blue);
+      &::after {
+        transform: scale(1);
+      }
+    }
+    @apply flex items-center justify-center transition ease-in-out w-5 h-5;
+  }
+  &__text {
+    @apply text-font-primary text-xs leading-5 font-semibold whitespace-nowrap;
+  }
+  &__list {
+    @apply pb-2.5 flex flex-wrap md:block;
+  }
+  &__li {
+    @apply flex-1;
+  }
+}

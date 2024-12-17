@@ -1,0 +1,6 @@
+.preloader {
+  @apply hidden justify-center;
+  & img {
+    @apply w-32;
+  }
+}

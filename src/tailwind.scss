@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+:root {
+  --background: #f3f7fa;
+  --background-light: #f1fcff;
+  --font-primary: #4a4a4a;
+  --blue: #2196f3;
+  --blue-darker: #1e89e1;
+  --blue-light: #9abbce;
+  --gray: #a0b0b9;
+  --gray-light: #dfe5ec;
+}
+
+#root {
+  background: var(--background);
+  font-family: 'Open-sans', sans-serif;
+}
