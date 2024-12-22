@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type ErrorState = {
   error: boolean;
   status: string;
+  searchErrors: number;
 };
 
 const initialState: ErrorState = {
   error: false,
   status: '',
+  searchErrors: 0,
 };
 
 const errorSlice = createSlice({
@@ -15,6 +17,7 @@ const errorSlice = createSlice({
   initialState,
   reducers: {
     setError(state, action: PayloadAction<string>) {
+      console.log('check');
       state.error = true;
       state.status = action.payload;
     },

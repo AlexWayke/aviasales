@@ -6,7 +6,7 @@ export interface SortState {
 }
 
 const initialState: SortState = {
-  sortBy: '',
+  sortBy: 'price',
 };
 
 const sortSlice = createSlice({

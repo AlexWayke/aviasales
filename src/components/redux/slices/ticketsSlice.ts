@@ -1,29 +1,35 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getTickets, Ticket } from '@Components/api/getData';
-import { setError, removeError } from './errorSlice';
 
 export interface TicketsState {
   tickets: Ticket[];
   status: string;
+  stop: boolean;
 }
 
 const initialState: TicketsState = {
   tickets: [],
   status: 'calm',
+  stop: false,
 };
 
-export const fetchTickets = createAsyncThunk<Ticket[]>(
+type ticketsResponse = {
+  tickets?: Ticket[];
+  stop?: boolean;
+};
+
+export const fetchTickets = createAsyncThunk<ticketsResponse, string>(
   'tickets/fetchTickets',
-  async function () {
-    const tickets = await getTickets();
-    if (!tickets) {
+  async function (searchId: string) {
+    const response = await getTickets(searchId);
+    if (!response.tickets) {
       throw new Error("Can't fetch tickets");
     }
-    return tickets;
+    return response;
   }
 );
 
-const ticketsSlice = createSlice({
+export const ticketsSlice = createSlice({
   name: 'tickets',
   initialState,
   reducers: {},
@@ -31,14 +37,16 @@ const ticketsSlice = createSlice({
     builder
       .addCase(fetchTickets.pending, (state: TicketsState) => {
         state.status = 'loading';
-        removeError();
       })
       .addCase(fetchTickets.fulfilled, (state, action) => {
         state.status = 'calm';
-        state.tickets = action.payload;
+        state.tickets = action.payload.tickets
+          ? state.tickets.concat(action.payload.tickets)
+          : state.tickets;
+        state.stop = action.payload.stop ? action.payload.stop : state.stop;
       })
-      .addCase(fetchTickets.rejected, () => {
-        setError('Could not fetch tickets.');
+      .addCase(fetchTickets.rejected, (state: TicketsState) => {
+        state.status = 'error';
       });
   },
 });

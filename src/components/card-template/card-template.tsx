@@ -3,16 +3,20 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Ticket } from '@Components/api/getData';
 import Button from '@Components/button/button';
+import { setError } from '@Components/redux/slices/errorSlice';
 import sortTickets from '@Components/utils/sorting';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Card from '../card/card';
 import Flex from '../flex/flex';
+import { fetchSearchId } from '../redux/slices/searchIdSlice';
 import { fetchTickets } from '../redux/slices/ticketsSlice';
 import './card-template.scss';
 
 function CardTemplate() {
   const dispatch = useAppDispatch();
-  const tickets = useAppSelector((state) => state.tickets.tickets);
+  const searchId = useAppSelector((state) => state.searchId.searchId);
+  const error = useAppSelector((state) => state.error.error);
+  const { tickets, status, stop } = useAppSelector((state) => state.tickets);
   const filters = useAppSelector((state) => state.filters.filters);
   const sortBy = useAppSelector((state) => state.sort.sortBy);
   const [countOfTickets, setCountOfTickets] = useState(5);
@@ -38,8 +42,18 @@ function CardTemplate() {
   );
 
   useEffect(() => {
-    void dispatch(fetchTickets());
-  }, [dispatch]);
+    if (status === 'error' && !error) {
+      dispatch(setError('Fetch error'));
+    } else if (searchId.length) {
+      if (!stop) {
+        void dispatch(fetchTickets(searchId));
+      }
+    } else {
+      void dispatch(fetchSearchId());
+    }
+  }, [error, stop, status, searchId, tickets, dispatch]);
+
+  useEffect;
 
   const ticketsCountHandler = () => {
     setCountOfTickets(countOfTickets + 5);

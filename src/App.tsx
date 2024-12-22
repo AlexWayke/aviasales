@@ -11,7 +11,6 @@ import { useAppSelector } from './hooks';
 function App() {
   const status = useAppSelector((state) => state.tickets.status);
   const isError = useAppSelector((state) => state.error.error);
-  console.log('isError', isError);
   const errorStatus = useAppSelector((state) => state.error.status);
 
   return (
@@ -23,7 +22,7 @@ function App() {
         <Flex classes="flex-col">
           <Tabs />
           <Preloader status={status} />
-          <CardTemplate />
+          {!isError && <CardTemplate />}
         </Flex>
       </PageTemplate>
     </Flex>
