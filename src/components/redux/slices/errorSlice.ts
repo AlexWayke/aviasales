@@ -17,7 +17,6 @@ const errorSlice = createSlice({
   initialState,
   reducers: {
     setError(state, action: PayloadAction<string>) {
-      console.log('check');
       state.error = true;
       state.status = action.payload;
     },

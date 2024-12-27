@@ -39,7 +39,7 @@ export const ticketsSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchTickets.fulfilled, (state, action) => {
-        state.status = 'calm';
+        state.status = action.payload.stop ? 'calm' : state.status;
         state.tickets = action.payload.tickets
           ? state.tickets.concat(action.payload.tickets)
           : state.tickets;
