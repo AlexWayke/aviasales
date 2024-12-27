@@ -15,7 +15,6 @@ import './card-template.scss';
 function CardTemplate() {
   const dispatch = useAppDispatch();
   const searchId = useAppSelector((state) => state.searchId.searchId);
-  const error = useAppSelector((state) => state.error.error);
   const { tickets, status, stop } = useAppSelector((state) => state.tickets);
   const filters = useAppSelector((state) => state.filters.filters);
   const sortBy = useAppSelector((state) => state.sort.sortBy);
@@ -42,18 +41,18 @@ function CardTemplate() {
   );
 
   useEffect(() => {
-    if (status === 'error' && !error) {
-      dispatch(setError('Fetch error'));
-    } else if (searchId.length) {
-      if (!stop) {
-        void dispatch(fetchTickets(searchId));
-      }
-    } else {
+    if (!searchId.length) {
       void dispatch(fetchSearchId());
     }
-  }, [error, stop, status, searchId, tickets, dispatch]);
+  });
 
-  useEffect;
+  useEffect(() => {
+    if (status === 'error') {
+      dispatch(setError('Fetch error'));
+    } else if (searchId.length && !stop) {
+      void dispatch(fetchTickets(searchId));
+    }
+  });
 
   const ticketsCountHandler = () => {
     setCountOfTickets(countOfTickets + 5);

@@ -3,7 +3,7 @@
     @apply flex-col p-5;
   }
   &__top {
-    @apply items-center justify-between;
+    @apply min-h-9 items-center justify-between;
   }
   &__price {
     @apply text-blue text-2xl leading-6 font-semibold;
