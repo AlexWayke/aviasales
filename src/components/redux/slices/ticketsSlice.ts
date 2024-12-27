@@ -35,15 +35,12 @@ export const ticketsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTickets.pending, (state: TicketsState) => {
-        state.status = 'loading';
-      })
       .addCase(fetchTickets.fulfilled, (state, action) => {
-        state.status = action.payload.stop ? 'calm' : state.status;
+        state.status = action.payload.stop ? 'calm' : 'loading';
+        state.stop = action.payload.stop ? action.payload.stop : state.stop;
         state.tickets = action.payload.tickets
           ? state.tickets.concat(action.payload.tickets)
           : state.tickets;
-        state.stop = action.payload.stop ? action.payload.stop : state.stop;
       })
       .addCase(fetchTickets.rejected, (state: TicketsState) => {
         state.status = 'error';
