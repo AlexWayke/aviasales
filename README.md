@@ -1,1 +1,3 @@
-Deploy: [[https://vercel.com/alexanderpoltavskys-projects/aviasales/FGS7q4Syd6o6ghZzNuFasPpsYcg4](https://aviasales-two-puce.vercel.app/)](https://aviasales-two-puce.vercel.app/)
+Deploy: https://aviasales-n3u3c0uvf-alexanderpoltavskys-projects.vercel.app/
+
+Fixed: Поправил изменение стейта ticketSlice, чтобы запросы не порождали самт себя
